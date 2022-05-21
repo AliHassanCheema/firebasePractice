@@ -3,20 +3,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import 'login_vu.dart';
+
 class LoginViewModel extends BaseViewModel {
   var formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passController = TextEditingController();
+  var nameController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
   bool check = false;
   // Sign in User
   onLogInUser(String email, String password, BuildContext context) async {
+    setBusy(true);
     try {
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) => debugPrint('login successfully!'))
           .then((value) => Navigator.push(context,
               MaterialPageRoute(builder: (context) => const Detection())));
+      setBusy(false);
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(error.toString())));
@@ -50,5 +55,20 @@ class LoginViewModel extends BaseViewModel {
 
   signOut() async {
     await auth.signOut();
+  }
+
+  //Add User
+  onSignUp(String email, String password, BuildContext context) async {
+    try {
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LoginScreen())));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Created')));
+    } on FirebaseAuthException catch (error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.toString())));
+    }
   }
 }
