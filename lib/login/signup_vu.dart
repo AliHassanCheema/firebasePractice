@@ -9,40 +9,34 @@ class SignUpScreen extends ViewModelBuilderWidget<LoginViewModel> {
   @override
   Widget builder(
       BuildContext context, LoginViewModel viewModel, Widget? child) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('APPIC'),
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                'assets/bg1.jpg',
-              ),
-              fit: BoxFit.cover),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('APPIC'),
         ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              key: viewModel.formKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Card(
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                  'assets/bg1.jpg',
+                ),
+                fit: BoxFit.cover),
+          ),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Form(
+                key: viewModel.formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Welcome to Appic',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 32),
                         customTextField(
                             controller: viewModel.nameController,
                             label: 'Name'),
@@ -66,20 +60,26 @@ class SignUpScreen extends ViewModelBuilderWidget<LoginViewModel> {
                             },
                             child: Row(
                               children: const [
-                                Text('LogIn'),
+                                Text(
+                                  'Switch to LogIn',
+                                  style: TextStyle(
+                                      color: Colors.teal,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
                               ],
                             )),
                         const SizedBox(height: 16),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Colors.cyan[900],
                             borderRadius: BorderRadius.circular(8),
                           ),
                           width: double.infinity,
                           child: TextButton(
                             child: const Text(
                               'SignUp',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () {
                               viewModel.onSignUp(

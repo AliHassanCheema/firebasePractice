@@ -1,4 +1,4 @@
-import 'package:authpractice/home/home_screen.dart';
+import 'package:authpractice/home/home_vu.dart';
 import 'package:authpractice/login/login_vu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.black),
                   ),
                   onPressed: () {
-                    viewModel.signOut();
+                    // viewModel.signOut();
                   },
                 ),
               )

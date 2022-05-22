@@ -14,17 +14,23 @@ class LoginViewModel extends BaseViewModel {
   bool check = false;
   // Sign in User
   onLogInUser(String email, String password, BuildContext context) async {
-    setBusy(true);
     try {
+      setBusy(true);
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) => debugPrint('login successfully!'))
-          .then((value) => Navigator.push(context,
+          .then((value) {
+        debugPrint('login successfully!');
+      }).then((value) => Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const Detection())));
       setBusy(false);
     } on FirebaseAuthException catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.toString())));
+      setBusy(false);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text(error.message.toString()),
+        ),
+      );
     }
   }
 
@@ -43,7 +49,7 @@ class LoginViewModel extends BaseViewModel {
               ),
             ).then((value) => toggle()),
           );
-    } on FirebaseAuthException catch (error) {
+    } catch (error) {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -51,10 +57,6 @@ class LoginViewModel extends BaseViewModel {
               ));
     }
     notifyListeners();
-  }
-
-  signOut() async {
-    await auth.signOut();
   }
 
   //Add User
